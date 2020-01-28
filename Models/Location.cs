@@ -1,4 +1,4 @@
-﻿namespace Modas.Models
+﻿namespace Modas2.Models
 {
     public class Location
     {

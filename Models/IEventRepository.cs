@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-namespace Modas.Models
+namespace Modas2.Models
 {
     public interface IEventRepository
     {

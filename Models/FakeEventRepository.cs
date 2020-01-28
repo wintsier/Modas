@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Modas.Models
+namespace Modas2.Models
 {
     public class FakeEventRepository : IEventRepository
     {
