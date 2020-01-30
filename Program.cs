@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Modas2
+namespace Modas
 {
     public class Program
     {
@@ -19,7 +19,7 @@ namespace Modas2
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseDefaultServiceProvider(options => options.ValidateScopes = false);
+                   .UseStartup<Startup>()
+                   .UseDefaultServiceProvider(options => options.ValidateScopes = false);
     }
 }

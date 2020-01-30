@@ -1,6 +1,6 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace Modas2.Models
+namespace Modas.Models
 {
     public class ApplicationDbContext : DbContext
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Modas2.Models
+namespace Modas.Models
 {
     public class Event
     {
