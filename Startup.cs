@@ -11,7 +11,8 @@ namespace Modas
     {
         // this exposes the connection string in appsettings.json
         public IConfiguration Configuration { get; }
-        public Startup(IConfiguration configuration){
+        public Startup(IConfiguration configuration)
+        {
             Configuration = configuration;
         }
 
@@ -44,7 +45,7 @@ namespace Modas
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
             app.UseStaticFiles();
-            SeedData.EnsurePopulated(app);
+            //SeedData.EnsurePopulated(app);
         }
     }
 }
