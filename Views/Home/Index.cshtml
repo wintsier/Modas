@@ -20,11 +20,11 @@
             <tbody>
                 @foreach (var e in Model.Events)
                 {
-                    <tr>
-                        <td>@String.Format("{0: ddd, MMM dd, yyyy}", e.TimeStamp)</td>
-                        <td>@String.Format("{0:hh:mm tt}", e.TimeStamp)</td>
-                        <td>@e.Location.Name</td>
-                    </tr>
+                <tr>
+                    <td>@String.Format("{0: ddd, MMM dd, yyyy}", e.TimeStamp)</td>
+                    <td>@String.Format("{0:hh:mm tt}", e.TimeStamp)</td>
+                    <td>@e.Location.Name</td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -51,12 +51,10 @@
     <script>
         $(function () {
             initButtons();
-
             // event listeners for first/next/prev/last buttons
             $('#next, #prev, #first, #last').on('click', function () {
                 location.href = "page" + $(this).data('page');
             });
-
             function initButtons() {
                 // disable prev/first buttons when on first page
                 $('#first, #prev').prop('disabled', $('#start').html() == "1");
