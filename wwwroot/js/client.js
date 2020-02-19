@@ -1,6 +1,7 @@
 ﻿// Turn off ESLint (Windows): Tools - Options - Text Editor - Javascript - Linting
 $(function () {
-    getEvents(1)
+    var toasts = [];
+    getEvents(1);
 
     function getEvents(page) {
         $.getJSON({
@@ -13,15 +14,70 @@ $(function () {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 // log the error to the console
-                console.log("The following error occured: " + textStatus, errorThrown);
+                console.log("The following error occured: " + jqXHR.status, errorThrown);
             }
         });
     }
+
+    // delegated event handler needed
+    // http://api.jquery.com/on/#direct-and-delegated-events
+    $('tbody').on('click', '.flag', function () {
+        var checked;
+        if ($(this).data('checked')) {
+            $(this).data('checked', false);
+            $(this).removeClass('fas').addClass('far');
+            checked = false;
+        } else {
+            $(this).data('checked', true);
+            $(this).removeClass('far').addClass('fas');
+            checked = true;
+        }
+        // AJAX to update database
+        $.ajax({
+            headers: { "Content-Type": "application/json" },
+            url: "../api/event/" + $(this).data('id'),
+            type: 'patch',
+            data: JSON.stringify([{ "op": "replace", "path": "Flagged", "value": checked }]),
+            success: function () {
+                //console.log("success");
+                // Toast
+                toast("Update Complete", "Event flag " + (checked ? "added." : "removed."), "far fa-edit");
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                // log the error to the console
+                console.log("The following error occured: " + jqXHR.status, errorThrown);
+            }
+        });
+    });
 
     // event listeners for first/next/prev/last buttons
     $('#next, #prev, #first, #last').on('click', function () {
         getEvents($(this).data('page'));
     });
+
+    function toast(header, text, icon) {
+        // create unique id for toast using array length
+        var id = toasts.length;
+        // generate html for toast
+        var toast = "<div id=\"" + id + "\" class=\"toast\" style=\"min-width:300px;\">" +
+            "<div class=\"toast-header\">" +
+            "<strong class=\"mr-auto\">" + header + "</strong><button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"toast\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button></div>" +
+            "<div class=\"toast-body\"><i class=\"" + icon + "\"></i> " + text + "</div>" +
+            "</div>";
+        // append the toast html to toast container
+        $('#toast_container').append(toast);
+        // add toast id to array
+        toasts.push(id);
+        // show toast
+        $('#' + id).toast({ delay: 1500 }).toast('show');
+        // after toast has been hidden
+        $('#' + id).on('hidden.bs.toast', function () {
+            // remove toast from array
+            toasts.splice(id);
+            // remove toast from DOM
+            $('#' + id).remove();
+        });
+    }
 
     function showTableBody(e) {
         var html = "";
